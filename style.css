@@ -5,7 +5,8 @@
     --matrix-green: #00ff41;
     --dark-bg: #0d0d0d;
     --light-grey: #c0c0c0;
-    --glow-color: rgba(0, 255, 65, 0.75);
+    --glow-color: rgba(0, 255, 65, 0.3);
+    --title-green: #2ecc71;
 }
 
 * {
@@ -36,6 +37,12 @@ h1, h2 {
     color: var(--matrix-green);
     font-weight: 700;
     text-transform: uppercase;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    max-width: 100%;
+    padding: 0 10px;
 }
 
 section {
@@ -100,58 +107,24 @@ nav {
 }
 
 .hero h1 {
-    font-size: 3.5rem;
+    font-size: 2.8rem;
     margin-bottom: 1rem;
-    animation: glitch 1s linear infinite;
+    position: relative;
+    color: var(--matrix-green);
+    text-shadow: none;
+    animation: simpleGlitch 5s infinite;
 }
 
-/* Efecto Glitch para el nombre */
-@keyframes glitch {
-  2%,64% { transform: translate(2px,0) skew(0deg); }
-  4%,60% { transform: translate(-2px,0) skew(0deg); }
-  62% { transform: translate(0,0) skew(5deg); }
+@keyframes simpleGlitch {
+    0%, 100% { transform: none; }
+    98% { transform: skew(0.3deg); }
+    99% { transform: skew(-0.3deg); }
 }
-.hero h1:before, .hero h1:after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--dark-bg);
-  overflow: hidden;
-}
-.hero h1:before {
-  left: 2px;
-  text-shadow: -2px 0 var(--matrix-green);
-  animation: glitch-top 1s linear infinite;
-}
-@keyframes glitch-top {
-  2%,64% { transform: translate(2px,-2px); }
-  4%,60% { transform: translate(-2px,2px); }
-  62% { transform: translate(13px,-1px) skew(-13deg); }
-}
+
+/* Removiendo los antiguos efectos glitch */
+.hero h1:before,
 .hero h1:after {
-  left: -2px;
-  text-shadow: -2px 0 var(--glow-color);
-  animation: glitch-bottom 1.5s linear infinite;
-}
-
-.hero-subtitle {
-    font-size: 1.5rem;
-    color: var(--light-grey);
-    min-height: 2.2em; /* Para evitar saltos de layout */
-}
-
-.typing-cursor {
-    display: inline-block;
-    width: 10px;
-    height: 1.2rem;
-    background-color: var(--matrix-green);
-    animation: blink 1s infinite;
-}
-
-@keyframes blink {
-    50% { opacity: 0; }
+    content: none;
 }
 
 /* --- SOBRE MÍ --- */
@@ -292,29 +265,132 @@ footer {
 }
 
 /* --- RESPONSIVE DESIGN --- */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 90%;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+        word-wrap: break-word;
+        hyphens: auto;
+    }
+
+    #projects h2, #skills h2, #contact h2 {
+        font-size: 1.8rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    h1, h2 {
+        font-size: calc(1.5rem + 2vw);
+        line-height: 1.3;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    #projects h2, #skills h2, #contact h2 {
+        font-size: 1.6rem;
+        margin: 1.5rem auto;
+        max-width: 100%;
+        word-break: break-word;
+    }
+
     .nav-links {
         display: none; /* Simplificando para demo, se podría implementar un menú hamburguesa */
     }
+
     .hero {
         height: 50vh;
+        padding: 1rem;
     }
+
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
     }
+
     .hero-subtitle {
         font-size: 1.2rem;
+        line-height: 1.4;
     }
+
     #about {
         flex-direction: column;
         text-align: center;
+        gap: 2rem;
     }
+
     .about-img {
         width: 200px;
         height: 200px;
-        margin-bottom: 2rem;
     }
+
+    .about-text h2 {
+        font-size: 1.8rem;
+    }
+
+    .about-text p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
     section {
         padding: 2rem 0;
+    }
+
+    #projects h2, #skills h2, #contact h2 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+
+    .project-card {
+        padding: 1.25rem;
+    }
+
+    .skills-container {
+        gap: 0.75rem;
+    }
+
+    .skill-tag {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    .social-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .social-links a {
+        font-size: 2rem;
+        margin: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    h1, h2 {
+        font-size: calc(1.2rem + 2vw);
+        padding: 0 8px;
+        margin-bottom: 0.8rem;
+    }
+
+    #projects h2, #skills h2, #contact h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1.2rem;
+        padding: 0 10px;
     }
 }
